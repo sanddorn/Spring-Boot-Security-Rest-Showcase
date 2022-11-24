@@ -1,0 +1,48 @@
+spring:
+  application:
+    name: radius-persistence
+  main:
+    banner-mode: off
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/test}
+    username: ${DATABASE_USERNAME:test}
+    password: ${DATABASE_PASSWORD:test}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: true
+    database: postgresql
+  flyway:
+    enabled: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI:http://192.168.178.123:8080/realms/SecureWifi}
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+server:
+  port: 8080
+
+management:
+  metrics:
+    web:
+      server:
+        request:
+          autotime:
+            enabled: true
+    export:
+      prometheus:
+        enabled: true
+  server:
+    port: 8090
+
+radius:
+  cors:
+    origins: ${CORS_ORIGINS:http://192.168.178.123:4200}
